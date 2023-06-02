@@ -9,44 +9,46 @@ async function Work() {
             method: "GET",
             headers: { "Accept": "application/json" }
         });
-        if (response.ok === true) {
+        if (response.ok) {
             const data = await response.json();
-            console.dir(data)
-            if (flag) {
-                console.dir(data.slice(-1)[0].tempD)
-                let cold = 0, normal = 0, warm = 0
-                data.forEach(el => {
-                    if (el.tempD < 20)
-                        cold++
-                    else if (el.tempD >= 20 && el.tempD < 40)
-                        normal++
+            if (data != undefined) {
+                console.dir(10)
+                if (flag) {
+                    console.dir(data.slice(-1)[0].tempD)
+                    let cold = 0, normal = 0, warm = 0
+                    data.forEach(el => {
+                        if (el.tempD < 20)
+                            cold++
+                        else if (el.tempD >= 20 && el.tempD < 40)
+                            normal++
+                        else
+                            warm++;
+                    })
+                    circleChart.data.datasets[0].data = [cold, normal, warm]
+                    circleChart.update();
+                    flag = false
+                }
+                else {
+                    if (data.slice(-1)[0].tempD < 20)
+                        circleChart.data.datasets[0].data[0] += 1
+                    else if (data.slice(-1)[0].tempD >= 20 && data.slice(-1)[0].tempD < 40)
+                        circleChart.data.datasets[0].data[1] += 1
                     else
-                        warm++;
+                        circleChart.data.datasets[0].data[2] += 1
+                    circleChart.update()
+                }
+                lineChart.data.datasets[0].data = []
+                lineChart.data.labels = []
+                data.slice(-10).forEach(el => {
+                    lineChart.data.datasets[0].data.push(el.tempD)
                 })
-                circleChart.data.datasets[0].data = [cold, normal, warm]
-                circleChart.update();
-                flag = false
+                data.slice(-10).forEach(el => {
+                    console.dir(el.timeD)
+                    lineChart.data.labels.push(el.timeD.slice(11))
+                })
+
+                lineChart.update();
             }
-            else {
-                if (data.slice(-1)[0].tempD < 20)
-                    circleChart.data.datasets[0].data[0]+= 1
-                else if (data.slice(-1)[0].tempD >= 20 && data.slice(-1)[0].tempD < 40)
-                    circleChart.data.datasets[0].data[1]+= 1
-                else
-                    circleChart.data.datasets[0].data[2] += 1
-                circleChart.update()
-            }
-            lineChart.data.datasets[0].data = []
-            lineChart.data.labels = []
-            data.slice(-10).forEach(el => {
-                lineChart.data.datasets[0].data.push(el.tempD)
-            })
-            data.slice(-10).forEach(el => {
-                console.dir(el.timeD)
-                lineChart.data.labels.push(el.timeD.slice(11))
-            })
-            
-            lineChart.update();
         }
         await new Promise(res => setTimeout(res, 10000));
         
@@ -64,7 +66,6 @@ function BuildLine(chartTitle) {
         }],
     };
     var ctx = document.getElementById('myChartLine');
-    console.dir(ctx);
     var myChart = new Chart(ctx, {
         type: 'line',
         data: data,
@@ -94,7 +95,6 @@ function BuildCircle(chartTitle) {
         }],
     };
     var ctx = document.getElementById('myChartCircle');
-    console.dir(ctx);
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: data,

@@ -24,7 +24,7 @@ Task.Run(() =>
         if (datum.TempD < 20)
             datum.MsgD = "Cold";
         else if (datum.TempD >= 20 && datum.TempD < 40)
-            datum.MsgD = "Norm";
+            datum.MsgD = "Normal";
         else if (datum.TempD >= 40)
             datum.MsgD = "Warm";
         baseHandler.InsertData(datum);
