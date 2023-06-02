@@ -1,5 +1,43 @@
-﻿html, body {
-    width: 100%;
+﻿html,
+body {
     height: 100%;
     margin: 0;
+    margin-left: 5px;
+    margin-right :5px;
+    background-color: bisque;
+    font-family: "Courier New", Courier, monospace;
+}
+
+.text {
+    text-align: center;
+}
+
+.first-graph,
+.second-graph {
+    width: 35%;
+    height: 500px;
+}
+.first-graph{
+    width: 60%;
+}
+.graph {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+.graph1 {
+    height: 700px !important;
+}
+.graph2 {
+    width: 100% !important;
+    height: 700px !important;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    height: 500px;
 }

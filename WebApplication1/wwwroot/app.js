@@ -42,7 +42,8 @@ async function Work() {
                 lineChart.data.datasets[0].data.push(el.tempD)
             })
             data.slice(-10).forEach(el => {
-                lineChart.data.labels.push(el.timeD)
+                console.dir(el.timeD)
+                lineChart.data.labels.push(el.timeD.slice(11))
             })
             
             lineChart.update();
@@ -63,6 +64,7 @@ function BuildLine(chartTitle) {
         }],
     };
     var ctx = document.getElementById('myChartLine');
+    console.dir(ctx);
     var myChart = new Chart(ctx, {
         type: 'line',
         data: data,
@@ -92,6 +94,7 @@ function BuildCircle(chartTitle) {
         }],
     };
     var ctx = document.getElementById('myChartCircle');
+    console.dir(ctx);
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: data,

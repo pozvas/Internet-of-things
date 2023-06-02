@@ -28,7 +28,6 @@ Task.Run(() =>
         else if (datum.TempD >= 40)
             datum.MsgD = "Warm";
         baseHandler.InsertData(datum);
-        baseHandler.ViewData();
         Thread.Sleep(10000);
     }
 });
